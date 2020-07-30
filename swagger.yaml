@@ -1,0 +1,114 @@
+basePath: /
+consumes:
+- application/image
+- application/json
+host: localhost
+info:
+  contact:
+    email: priya.sharma6693@gmail.com
+    name: Priya Sharma
+  description: |-
+    The purpose of this application is to provide an application
+    that will expose REST API's to store,retrieve,delete and get Images and Albums.
+  termsOfService: there are no TOS at this moment, use at your own risk we take no responsibility
+  version: 0.0.1
+paths:
+  /createAlbum:
+    post:
+      description: |-
+        Creates a new Album
+        If album is already present in DB, Error Conflict (409) will be returned.
+      operationId: postAlbum
+      responses:
+        "200":
+          $ref: '#/responses/Success'
+        "400":
+          $ref: '#/responses/BadRequest'
+        "409":
+          $ref: '#/responses/DuplicateAlbum'
+      tags:
+      - createAlbum
+  /createImage:
+    post:
+      description: |-
+        Creates a new Image
+        If Image is already present in DB, Error Conflict (409) will be returned.
+      operationId: postImage
+      responses:
+        "200":
+          $ref: '#/responses/Success'
+        "400":
+          $ref: '#/responses/BadRequest'
+        "404":
+          $ref: '#/responses/NotFound'
+        "409":
+          $ref: '#/responses/DuplicateAlbum'
+      tags:
+      - createImage
+  /deleteAlbum:
+    delete:
+      description: |-
+        Deletes an Album
+        If album not present in DB, 404 is returned
+      operationId: removeAlbum
+      responses:
+        "200":
+          $ref: '#/responses/Success'
+        "400":
+          $ref: '#/responses/BadRequest'
+        "404":
+          $ref: '#/responses/NotFound'
+      tags:
+      - deleteAlbum
+  /deleteImage:
+    delete:
+      description: |-
+        Deletes an Image
+        If image and album combination not present in DB, 404 is returned
+      operationId: removeImage
+      responses:
+        "200":
+          $ref: '#/responses/Success'
+        "400":
+          $ref: '#/responses/BadRequest'
+        "404":
+          $ref: '#/responses/NotFound'
+      tags:
+      - deleteImage
+  /getAllImages:
+    get:
+      description: |-
+        Get all the images present in DB
+        If no images are present - 404 is returned
+      operationId: listImages
+      responses:
+        "200":
+          $ref: '#/responses/Success'
+        "400":
+          $ref: '#/responses/BadRequest'
+        "404":
+          $ref: '#/responses/NotFound'
+      tags:
+      - getAllImages
+  /getImage:
+    get:
+      description: |-
+        Get an Image for Album and Image Combination
+        If image and album combination not present in DB, 404 is returned
+      operationId: listImage
+      responses:
+        "200":
+          $ref: '#/responses/Success'
+        "400":
+          $ref: '#/responses/BadRequest'
+        "404":
+          $ref: '#/responses/NotFound'
+      tags:
+      - getImage
+produces:
+- application/json
+- application/zip
+- application/image
+schemes:
+- http
+swagger: "2.0"

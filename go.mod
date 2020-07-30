@@ -1,0 +1,11 @@
+module imageStoreService
+
+go 1.14
+
+require (
+	github.com/go-sql-driver/mysql v1.5.0
+	github.com/google/uuid v1.1.1 // indirect
+	github.com/gorilla/mux v1.7.4
+	github.com/namsral/flag v1.7.4-pre // indirect
+	github.com/segmentio/kafka-go v0.3.7
+)
