@@ -17,26 +17,6 @@ import (
 
 //DeleteImage servers the API /deleteImage to delete a new Album
 func DeleteImage(w http.ResponseWriter, r *http.Request) {
-	// swagger:operation DELETE /deleteImage?albumName=&imageCaption=
-	// ---
-	// summary: Deletes an Album
-	// description: If image and album combination not present in DB, 404 is returned
-	// parameters:
-	// - name: albumName
-	//   in: path
-	//   description: Name of the Album
-	//   type: string
-	//   required: false
-	// - name: imageCaption
-	//   in: path
-	//   description: Name of the Image
-	//   type: string
-	//   required: true
-	// responses:
-	//   "200":
-	//	 description: Successfully deleted
-	//   "404":
-	//	   description: Not Found
 	ImageCaption := r.URL.Query().Get("imageCaption")
 	AlbumName := r.URL.Query().Get("albumName")
 	ImageCaption = strings.TrimSpace(ImageCaption)
