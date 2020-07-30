@@ -30,11 +30,7 @@ Image Store Service project helps create,retrieve and delete *.png,*.jpeg files 
 2) Run Kafka broker and zookeeper in 2nd terminal using docker-compose (dir : ~/WORKDIR/kafka-docker) 
    - docker-compose -f docker-compose-single-broker.yml up
 3) Run Kafka consumer in 3rd terminal (Once kafka container is up)
-   ``sudo docker exec -t kafka-docker_kafka_1 \
-     kafka-console-consumer.sh \
-    --bootstrap-server :9092 \
-    --group jacek-japila-pl \
-    --topic NewTopic1 ```
+   ```sudo docker exec -t kafka-docker_kafka_1 kafka-console-consumer.sh --bootstrap-server :9092  --group jacek-japila-pl --topic NewTopic1 ```
 4) Trigger any create/delete api to check kafka notification in the consumer terminal. Api definitions are given below.
 5) This is one complete flow.
 ### API Definitions
