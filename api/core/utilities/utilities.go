@@ -15,7 +15,7 @@ import (
 )
 
 const (
-	DB_HOST = "tcp(:3306)"
+	DB_HOST = "tcp(test-mysql:3306)"
 	DB_NAME = "test"
 	DB_USER = /*"root"*/ "root"
 	DB_PASS = /*""*/ "my-secret-pw"
