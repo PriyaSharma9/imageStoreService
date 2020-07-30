@@ -9,8 +9,9 @@ import (
 
 var Writer *kafka.Writer
 
+//KafkaUrl and Topic
 const (
-	KafkaURL = "kafka-docker_kafka_1:9092"
+	KafkaURL = "172.19.0.4:9092"
 	Topic    = "NewTopic1"
 )
 
