@@ -7,6 +7,7 @@ Image Store Service project helps create,retrieve and delete *.png,*.jpeg files 
     - `brew tap go-swagger/go-swagger`
     - `brew install go-swagger`
 - [`go`](https://golang.org/doc/install): built in (1.14 or later)
+- `make` should be installed
 - Prequisites for Kafka
     - git clone https://github.com/wurstmeister/kafka-docker 
     - cd ~/WORKDIR/kafka-docker
