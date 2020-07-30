@@ -5,6 +5,7 @@ ENV GIT_TERMINAL_PROMPT=1
 # Argument 
 ARG BRANCH=master
 # steps for git clone
+RUN apk add --update git
 RUN git clone -b $BRANCH https://github.com/PriyaSharma9/imageStoreService
 WORKDIR imageStoreService
 
