@@ -17,7 +17,7 @@ FROM alpine:3.11.3
 MAINTAINER priya.sharma6693@gmail.com
 RUN mkdir -p /usr/share/imageStoreService/
 
-COPY isDocker.sh monitor_imageStoreService.sh /
+COPY isEntryPoint.sh monitor_imageStoreService.sh /
 COPY --from=builder /go/imageStoreService/imageStoreService /usr/share/imageStoreService/imageStoreService
 
 # Packages
@@ -37,6 +37,6 @@ RUN apk update && \
     apk add -f apk-cron && \
     apk add -f openssl && \
     apk add  bash && \
-    chmod 777 /isDocker.sh  && \
+    chmod 777 /isEntryPoint.sh  && \
     chmod 777 /monitor_imageStoreService.sh
-ENTRYPOINT ["/isDocker.sh"]
+ENTRYPOINT ["/isEntryPoint.sh"]
