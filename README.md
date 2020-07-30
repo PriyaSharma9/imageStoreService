@@ -37,7 +37,7 @@ Image Store Service project helps create,retrieve and delete *.png,*.jpeg files 
 5) Trigger any create/delete api to check kafka notification in the consumer terminal. Api definitions are given below.
 
 
-### Running Dockerized Application
+## Running Dockerized Application
 
 1) docker build -f Dockerfile -t imagestoreservice3:latest 
 2) docker run --name imagestoreserver3 -d  imagestoreservice3:latest -p 8193:8193
