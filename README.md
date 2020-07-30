@@ -1,22 +1,22 @@
 # ImageStoreService
 Image Store Service project helps create,retrieve and delete *.png,*.jpeg files into MySql DB.
 
-
-## Running on local machine
-
-### Prerequisites
+## Prerequisites
 - Install docker and docker-compose
 - Install swagger
     - `brew tap go-swagger/go-swagger`
     - `brew install go-swagger`
 - [`go`](https://golang.org/doc/install): built in (1.14 or later)
-- Install Kafka
+- Prequisites for Kafka
     - git clone https://github.com/wurstmeister/kafka-docker 
     - cd ~/WORKDIR/kafka-docker
     - Edit docker-compose.yml - KAFKA_ADVERTISED_HOST_NAME: 127.0.0.1 ( Refer https://github.com/wurstmeister/kafka-docker#kafka-docker Readme.md for more details.)
 - Run Mysql server
     - ``` sudo docker pull mysql/mysql-server:latest
           sudo docker run --name test-mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql:latest]```
+
+## Running on local machine
+
 ### Basic commands
 1) Build the application  
     - `make build`
@@ -35,7 +35,21 @@ Image Store Service project helps create,retrieve and delete *.png,*.jpeg files 
 4) Run Kafka consumer in 3rd terminal (Once kafka container is up)
    ```sudo docker exec -t kafka-docker_kafka_1 kafka-console-consumer.sh --bootstrap-server :9092  --group jacek-japila-pl --topic NewTopic1 ```
 5) Trigger any create/delete api to check kafka notification in the consumer terminal. Api definitions are given below.
-### API Definitions
+
+
+### Running Dockerized Application
+
+1) docker build -f Dockerfile -t imagestoreservice3:latest 
+2) docker run --name imagestoreserver3 -d  imagestoreservice3:latest -p 8193:8193
+3) Create network 
+    - docker network create mynetwork
+    - docker network connect mynetwork kafka-docker_kafka_1
+    - docker network connect mynetwork imagestoreserver3
+    - docker network connect mynetwork test-mysql
+4) Run Kafka broker and Kafka consumer same as step 3 and step 4 in Steps to run the Application
+5) Trigger any create/delete api to check kafka notification in the consumer terminal. Api definitions are given below.
+
+## API Definitions
 
 -  Create Album  : `curl -v -X POST "http://localhost:8193/createAlbum/Family" `
 -  Create Image  : `curl -v -X POST -F "image=@/<location>"  "http://localhost:8193/createImage?imageCaption=&albumName=Family"`
@@ -49,7 +63,3 @@ Image Store Service project helps create,retrieve and delete *.png,*.jpeg files 
     - AlbumName is not a mandatory parameter. But if used, Image will be deleted for imageCaption and albumName combination.
 -   List All Images : `curl -v http://localhost:8193/getAllImages`
     - List all the images in the db. This will create a zip file to your local machine in the working directory so you can check if the images are formed correctly.
-
-
-## Running Dockerized Application
-
