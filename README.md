@@ -11,10 +11,13 @@ Image Store Service project helps create,retrieve and delete *.png,*.jpeg files 
     - `brew install go-swagger`
 - [`go`](https://golang.org/doc/install): built in (1.14 or later)
 - Install Kafka
-    - git clone https://github.com/wurstmeister/kafka-docker
-    - cd kafka-docker
+    - git clone https://github.com/wurstmeister/kafka-docker 
+    - cd ~/WORKDIR/kafka-docker
     - Edit docker-compose.yml - KAFKA_ADVERTISED_HOST_NAME: 127.0.0.1 ( Refer https://github.com/wurstmeister/kafka-docker#kafka-docker Readme.md for more details.)
-    
+- Run Mysql server
+    - ``` sudo docker pull mysql/mysql-server:latest
+          sudo docker run --name test-mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql:latest]```
+### Basic commands
 1) Build the application  
     - `make build`
 2) Run the application
@@ -22,3 +25,29 @@ Image Store Service project helps create,retrieve and delete *.png,*.jpeg files 
 3) Generate swagger.yaml
     - `make swagger`
 
+### Steps to run the Application
+1) Run the application in one terminal
+2) Run Kafka broker and zookeeper in 2nd terminal using docker-compose (dir : ~/WORKDIR/kafka-docker) 
+   - docker-compose -f docker-compose-single-broker.yml up
+3) Run Kafka consumer in 3rd terminal (Once kafka container is up)
+   - ```sudo docker exec -t kafka-docker_kafka_1 \
+  kafka-console-consumer.sh \
+    --bootstrap-server :9092 \
+    --group jacek-japila-pl \
+    --topic NewTopic1 ```
+4) Trigger any create/delete api to check kafka notification in the consumer terminal. Api definitions are given below.
+5) This is one complete flow.
+### API Definitions
+
+-  Create Album  : `curl -v -X POST "http://localhost:8193/createAlbum/Family" `
+-  Create Image  : `curl -v -X POST -F "image=@/<location>"  "http://localhost:8193/createImage?imageCaption=&albumName=Family"`
+    - Both imageCaption and albumName are manadatory parameters.
+-  Get Image     :  `curl -v http://localhost:8193/getImage?imageCaption=&albumName=` 
+    - Both imageCaption and albumName are manadatory parameters.
+    - This will create an image to your working directory to check if the image is getting formed correctly.
+-	Delete Album :  `curl -v -X DELETE http://localhost:8193/deleteAlbum/{albumName}` 
+    - albumName is a manadator parameter. It will delete the Album and the underlying images with it.
+-	Delete Image :   `curl -v -X DELETE http://localhost:8193/deleteImage?imageCaption=&albumName="`
+    - AlbumName is not a mandatory parameter. But if used, Image will be deleted for imageCaption and albumName combination.
+-   List All Images : `curl -v http://localhost:8193/getAllImages`
+    - List all the images in the db. This will create a zip file to your local machine in the working directory so you can check if the images are formed correctly.
